@@ -609,9 +609,9 @@ footer {
 	flex-flow: row wrap;
 	gap: 1rem;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	/* This code is used to add a lower opacity image that covers the entire footer and is on a fixed position */
-	background: linear-gradient(to bottom, rgba(62, 77, 92, 0.83), rgba(116, 169, 223, 0.64)), url("https://w0.peakpx.com/wallpaper/964/736/HD-wallpaper-piano-keys-macro.jpg") no-repeat center fixed;
+	background: linear-gradient(to bottom, rgba(62, 77, 92, 0.83), rgba(116, 169, 223, 0.64));
 	background-size: cover;
 }
 
