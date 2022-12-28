@@ -11,8 +11,13 @@
         <meta content="TODO" name="keyword">
         <meta content="width=device-width, initial-scale=1" name="viewport">
         <link href="css/styles.css" rel="stylesheet" type="text/css">
-        <script src="js/script.js">
-        </script>
+        <script src="js/form_validation.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+        <script src="js/templates.js"></script>
+        <script src="js/fetch.js"></script>
+		<script>
+			window.onload = load.index("main-content-article");
+		</script>
     </head>
     <body>
         <header id="header">
@@ -53,143 +58,7 @@
             <a class="return" href="index.html">
                 Back to Home
             </a>
-            <article>
-                <section>
-                    <details>
-                        <summary>
-                            Partiture Books
-                        </summary>
-                        <aside class="left">
-                            <img alt="Image of music book" class="type-image" src="image/categories/sheet.jpeg">
-                        </aside>
-                        <ul>
-                            <li>
-                                <a href="products-books.html">
-                                    Piano
-                                </a>
-                            </li>
-                            <li>
-                                Violin
-                            </li>
-                            <li>
-                                Guitar
-                            </li>
-                            <li>
-                                Flute
-                            </li>
-                            <li>
-                                Harp
-                            </li>
-                            <li>
-                                Drums
-                            </li>
-                        </ul>
-                    </details>
-                </section>
-                <section>
-                    <details>
-                        <summary>
-                            Music Instruments
-                        </summary>
-                        <aside class="left">
-                            <img alt="Image of music instrument" class="type-image" src="image/categories/music.jpg">
-                        </aside>
-                        <ul>
-                            <li>
-                                Pianos & Electric Pianos
-                            </li>
-                            <li>
-                                <a href="products-instruments.html">
-                                    Basses
-                                </a>
-                            </li>
-                            <li>
-                                Drums & Brass
-                            </li>
-                            <li>
-                                Guitars
-                            </li>
-                            <li>
-                                Keyboards & Synths
-                            </li>
-                            <li>
-                                Aerophones
-                            </li>
-                            <li>
-                                String Instruments
-                            </li>
-                            <li>
-                                Educational
-                            </li>
-                            <li>
-                                Traditional
-                            </li>
-                        </ul>
-                    </details>
-                </section>
-                <section>
-                    <details>
-                        <summary>
-                            DJ Equipment
-                        </summary>
-                        <aside class="left">
-                            <img alt="Image of dj equipment" class="type-image" src="image/categories/dj.jpeg">
-                        </aside>
-                        <ul>
-                            <li>
-                                DJ Controllers
-                            </li>
-                            <li>
-                                CD Player
-                            </li>
-                            <li>
-                                Pickup
-                            </li>
-                            <li>
-                                Mixers
-                            </li>
-                            <li>
-                                Headphones
-                            </li>
-                            <li>
-                                Groove Boxes
-                            </li>
-                            <li>
-                                DJ Sound Cards
-                            </li>
-                        </ul>
-                    </details>
-                </section>
-                <section>
-                    <details>
-                        <summary>
-                            Professional Sound/Image
-                        </summary>
-                        <aside class="left">
-                            <img alt="Image of audio equipment" class="type-image" src="image/categories/audio.png">
-                        </aside>
-                        <ul>
-                            <li>
-                                Speakers
-                            </li>
-                            <li>
-                                PA Systems
-                            </li>
-                            <li>
-                                Microphones
-                            </li>
-                            <li>
-                                Studio
-                            </li>
-                            <li>
-                                Software
-                            </li>
-                            <li>
-                                Headsets
-                            </li>
-                        </ul>
-                    </details>
-                </section>
+            <article id="main-content-article">
             </article>
         </main>
         <footer>
