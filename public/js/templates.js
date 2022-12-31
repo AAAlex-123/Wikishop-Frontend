@@ -1,4 +1,3 @@
-
 let templates = {}
 
 templates.categories = Handlebars.compile(`
@@ -44,4 +43,18 @@ templates.products = Handlebars.compile(`
 {{/each}}
 `);
 
-
+templates.filters = Handlebars.compile(`
+	<p>Filter</p>
+	<div>
+		<div>
+			<input type="radio" id="-1" name="filter" value="allprod">
+			<label for="-1">All</label><br>
+		</div>
+		{{#each subcategory}}
+			<div>
+				<input type="radio" id="{{id}}" name="filter" value="{{title}}">
+				<label for="{{id}}">{{title}}</label><br>
+			</div>
+		{{/each}}
+	</div>
+`);

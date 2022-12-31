@@ -1,47 +1,52 @@
 let load = {}
+let fetched_products = undefined;
 
 load.index = (elementId) => {
 	fetch("https://wiki-shop.onrender.com/categories")
-		.then(function (response) {
+		.then(response => {
 			return response.json()
 		})
-		.then(function (raw_obj) {
+		.then(raw_obj => {
 
-			obj = {
-				"categories": raw_obj
-			}
+			let htmlContent = templates.categories({
+				"categories": raw_obj,
+			});
 
-			// 3: create html from template and data
-			let htmlContent = templates.categories(obj);
-
-			// 4: put html in page
-			let element = document.querySelector(`#${elementId}`);
-			element.innerHTML = htmlContent;
+			document.querySelector(`#${elementId}`).innerHTML = htmlContent;;
 		});
 }
 
-load.category = (elementId) => {
+load.category = (contentElementId, filterElementId) => {
 
 	const searchParams = new URLSearchParams(window.location.search);
 
 	const categoryId = searchParams.get('categoryId');
 
 	fetch(`https://wiki-shop.onrender.com/categories/${categoryId}/products`)
-		.then(function (response) {
+		.then(response => {
 			return response.json()
 		})
-		.then(function (raw_obj) {
+		.then(raw_obj => {
 
-			obj = {
-				"products": raw_obj
-			}
+			fetched_products = raw_obj;
 
-			// 3: create html from template and data
-			let htmlContent = templates.products(obj);
+			let htmlContent = templates.products({
+				"products": raw_obj,
+			});
 
-			// 4: put html in page
-			let element = document.querySelector(`#${elementId}`);
-			element.innerHTML = htmlContent;
+			document.querySelector(`#${contentElementId}`).innerHTML = htmlContent;
+		});
+
+	fetch(`https://wiki-shop.onrender.com/categories/${categoryId}/subcategories`)
+		.then(response => {
+			return response.json();
+		})
+		.then(raw_obj => {
+
+			let htmlContent = templates.filters({
+				"subcategory": raw_obj,
+			});
+
+			document.querySelector(`#${filterElementId}`).innerHTML = htmlContent;
 		});
 }
-
