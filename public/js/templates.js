@@ -47,12 +47,12 @@ templates.filters = Handlebars.compile(`
 	<p>Filter</p>
 	<div>
 		<div>
-			<input type="radio" id="-1" name="filter" value="allprod">
+			<input type="radio" id="-1" name="filter" value="allprod" onclick="filterClick(-1, 'main-content-article')">
 			<label for="-1">All</label><br>
 		</div>
 		{{#each subcategory}}
 			<div>
-				<input type="radio" id="{{id}}" name="filter" value="{{title}}">
+				<input type="radio" id="{{id}}" name="filter" value="{{title}}" onclick="filterClick({{id}}, 'main-content-article')">
 				<label for="{{id}}">{{title}}</label><br>
 			</div>
 		{{/each}}
