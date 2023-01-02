@@ -398,6 +398,14 @@ p.extended-description {
 	text-align: justify;
 }
 
+p#form-result-success{
+	display:none;
+}
+
+p#form-result-failed{
+	display:none;
+}
+
 span.product-code {
 	font: italic 1rem 'Times New Roman', serif;
 }

@@ -22,12 +22,20 @@ loginFormSubmit = () => {
 	// 2: add listeners
 	request.onreadystatechange = () => {
 		if (request.readyState === XMLHttpRequest.DONE) {
+			console.log(request.status);
 			if (request.status == 200) {
 				let txt = request.responseText;
 				let obj = JSON.parse(txt);
+				document.querySelector("#form-result-success").style.display = "block";
+				document.querySelector("#form-result-failed").style.display = "none";
 				console.log(obj);
-			} else {
+			} else if (request.status==401){
+				document.querySelector("#form-result-failed").style.display = "block";
+				document.querySelector("#form-result-success").style.display = "none";
+			}
+			else {
 				console.log(`Request failed with status ${request.status}: ${request.statusText}`);
+				
 			}
 		}
 	}
