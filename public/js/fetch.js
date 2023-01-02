@@ -50,3 +50,4 @@ load.category = (contentElementId, filterElementId) => {
 			document.querySelector(`#${filterElementId}`).innerHTML = htmlContent;
 		});
 }
+

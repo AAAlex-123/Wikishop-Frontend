@@ -29,3 +29,11 @@ app.get('/', function(req, res){
         console.log(err)
     })
 })
+
+app.post('/login', (request, response) => {
+
+	console.log("Incoming request:", request.body);
+
+	response.send(JSON.stringify(request.body));
+})
+

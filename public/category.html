@@ -32,8 +32,29 @@
 				Wiki Shop
 			</h1>
 		</header>
-		<nav id="filter">
-		</nav>
+		<div>
+			<nav id="filter">
+			</nav>
+			<form id="login-form">
+				<fieldset>
+					<legend>
+						User Authentication
+					</legend>
+					<label for="username">
+						Username
+					</label>
+					<input autocomplete="username" id="username" name="username" placeholder="username" required="" type="text">
+					<label for="password">
+						Password
+					</label>
+					<input autocomplete="current-password" id="password" name="password" placeholder="password" required="" type="password">
+				</fieldset>
+				<div>
+				    <input id="btn_submit" type="submit" value="Submit">
+				    <input id="btn_reset" type="reset" value="Reset">
+				</div>
+			</form>
+		</div>
 		<main>
 			<header>
 				<h2>
@@ -71,5 +92,12 @@
 				Back to top
 			</a>
 		</footer>
+		<!-- hacky, but doesn't want to work otherwise -->
+		<script>
+			document.querySelector("#login-form").addEventListener('submit', e => {
+							e.preventDefault();
+							loginFormSubmit();
+						});
+		</script>
 	</body>
 </html>
