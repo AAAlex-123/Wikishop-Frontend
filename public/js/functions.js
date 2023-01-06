@@ -15,6 +15,9 @@ filterClick = (subcategoryId, contentElementId) => {
 	document.querySelector(`#${contentElementId}`).innerHTML = htmlContent;
 }
 
+var lastUsername = undefined;
+var lastSessionId = undefined;
+
 loginFormSubmit = () => {
 	// 1: create request
 	var request = new XMLHttpRequest();
@@ -29,13 +32,16 @@ loginFormSubmit = () => {
 				document.querySelector("#form-result-success").style.display = "block";
 				document.querySelector("#form-result-failed").style.display = "none";
 				console.log(obj);
+
+				// save session id and username used to login
+				lastSessionId = obj.sessionId;
+				lastUsername = document.querySelector("#username").value;
+				console.log(`Saved credentials: username - ${lastUsername}, sessionId - ${lastSessionId}`);
 			} else if (request.status==401){
 				document.querySelector("#form-result-failed").style.display = "block";
 				document.querySelector("#form-result-success").style.display = "none";
-			}
-			else {
-				console.log(`Request failed with status ${request.status}: ${request.statusText}`);
-				
+			} else {
+				console.log(`Request failed with unknown status ${request.status}: ${request.statusText}`);
 			}
 		}
 	}
@@ -50,5 +56,40 @@ loginFormSubmit = () => {
 	let formData = new FormData(formElement)
 	let queryString = new URLSearchParams(formData).toString();
 	request.send(queryString);
+}
+
+addToCart = (id) => {
+
+	console.log(`Add to cart: ${id}`);
+
+	// 1: create request
+	var request = new XMLHttpRequest();
+
+	// 2: add listeners
+	request.onreadystatechange = () => {
+		if (request.readyState === XMLHttpRequest.DONE) {
+			console.log(`Add to Cart Response: ${request.status}`)
+			if (request.status == 200) {
+				// do nothing
+			} else if (request.status==401){
+				alert("Please log in to add product to cart");
+			} else {
+				console.log(`Request failed with unknown status ${request.status}: ${request.statusText}`);
+			}
+		}
+	}
+
+	// 3: set method, url and headers
+	request.open("POST", "/addToCart");
+	request.setRequestHeader("Accept", "application/json");
+	request.setRequestHeader("Content-Type", "application/json");
+
+	// 4: send data
+	let data = {
+		productId: id,
+		username: lastUsername,
+		sessionId: lastSessionId,
+	}
+	request.send(JSON.stringify(data));
 }
 

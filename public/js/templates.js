@@ -25,8 +25,11 @@ templates.products = Handlebars.compile(`
 		</aside>
 		<aside class="right">
 			<span class="price">
-				{{cost}}
+				{{cost}}$
 			</span>
+			<button onclick="addToCart({{id}})">
+				Add to Cart
+			</button>
 		</aside>
 		<header>
 			<strong>

@@ -18,6 +18,10 @@ const user2= {username: "Ass", password: "Mana2"};
 const user_DB= [];
 user_DB.push(user, user2);
 
+const loggedInUsersDAO = {};
+
+const cartDAO = {};
+
 // parse url-encoded content from body
 app.use(express.urlencoded({ extended: false }))
 
@@ -38,18 +42,24 @@ app.get('/', function(req, res){
 
 app.post('/login', (request, response) => {
 
-	console.log("Incoming request:", request.body);
+	console.log("Incoming login request:", request.body);
     let sess=null;
     for (const x of user_DB){
         if(request.body.username===x.username && request.body.password===x.password){
             sess={ "sessionId": uuidv4() };
+
+		loggedInUsersDAO[request.body.username] = sess.sessionId;
+
+		if (cartDAO[request.body.username] === undefined) {
+			cartDAO[request.body.username] = {};
+		}
+
             response.status(200);
             response.send(JSON.stringify(sess));
             console.log(sess);
             console.log("Successful Login");
             break;
         } 
-            
     }
 
     if(sess===null){
@@ -58,5 +68,39 @@ app.post('/login', (request, response) => {
         console.log("Unsuccessful Login");
     }
 
+})
+
+app.post('/addToCart', (request, response) => {
+
+	console.log("Incoming cart item request:", request.body);
+
+	const { productId, username, sessionId } = request.body
+
+	if (username === undefined && sessionId === undefined) {
+		response.status(401);
+		response.send();
+		return;
+	}
+
+	let statusCode;
+
+	if (loggedInUsersDAO[username] === sessionId) {
+		let user = cartDAO[username];
+		if (user[productId] === undefined) {
+			user[productId] = 1;
+		} else {
+			user[productId] += 1;
+		}
+
+		console.log(`User ${username} has ${cartDAO[username][productId]} of product ${productId}`);
+
+		statusCode = 200;
+	} else {
+		console.log(`User ${username} not logged in`);
+		statusCode = 401;
+	}
+
+	response.status(statusCode);
+	response.send();
 })
 
