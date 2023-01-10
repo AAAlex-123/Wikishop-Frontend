@@ -91,7 +91,6 @@ app.post('/addToCart', (request, response) => {
 		} else {
 			user[productId] += 1;
 		}
-
 		console.log(`User ${username} has ${cartDAO[username][productId]} of product ${productId}`);
 
 		statusCode = 200;
@@ -103,4 +102,43 @@ app.post('/addToCart', (request, response) => {
 	response.status(statusCode);
 	response.send();
 })
+
+app.post('/cartSizeService', (request, response) => {
+
+	console.log("Incoming cart size service request:", request.body);
+	const { username, sessionId } = request.body
+
+	if (username === undefined && sessionId === undefined) {
+		response.status(401);
+		response.send();
+		return;
+	}
+
+	let statusCode;
+	let size=0;
+	let cartSize;
+
+	if (loggedInUsersDAO[username] === sessionId) {
+		console.log(`User data:` ,cartDAO);
+		let usersCart= cartDAO[username];
+		for(productId in usersCart){
+			size+=usersCart[productId];
+		}
+
+		cartSize= {"size": size};
+		statusCode = 200;
+	} else {
+		console.log(`User ${username} not logged in`);
+		statusCode = 401;
+	}
+
+
+	response.status(statusCode);
+	response.send(JSON.stringify(cartSize));
+
+	
+})
+
+
+
 
