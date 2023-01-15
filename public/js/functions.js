@@ -70,9 +70,9 @@ loginFormSubmit = () => {
 	request.send(queryString);
 }
 
-addToCart = (id) => {
+addToCart = (productId, cost, title) => {
 
-	console.log(`Add to cart: ${id}`);
+	console.log(`Add to cart: ${productId}, with cost ${cost} and name ${title}` );
 
 	// 1: create request
 	var request = new XMLHttpRequest();
@@ -82,7 +82,7 @@ addToCart = (id) => {
 		if (request.readyState === XMLHttpRequest.DONE) {
 			console.log(`Add to Cart Response: ${request.status}`)
 			if (request.status == 200) {
-				// do nothing
+				cartSizeService();
 			} else if (request.status==401){
 				alert("Please log in to add product to cart");
 			} else {
@@ -98,13 +98,11 @@ addToCart = (id) => {
 
 	// 4: send data
 	let data = {
-		productId: id,
+		product: {"title": title, "cost": cost, "id": productId },
 		username: lastUsername,
-		sessionId: lastSessionId,
+		sessionId: lastSessionId
 	}
 	request.send(JSON.stringify(data));
-
-	cartSizeService();
 }
 
 cartSizeService= () => {
@@ -130,20 +128,27 @@ cartSizeService= () => {
 			}
 		}		
 	}
-		// 3: set method, url and headers
-		request.open("POST", "/cartSizeService");
-		request.setRequestHeader("Accept", "application/json");
-		request.setRequestHeader("Content-Type", "application/json");
 
-		// 4: send data
-		let data = {
-			username: lastUsername,
-			sessionId: lastSessionId,
-		}
-		request.send(JSON.stringify(data));
+	// 3: set method, url and headers
+	request.open("POST", "/cartSizeService");
+	request.setRequestHeader("Accept", "application/json");
+	request.setRequestHeader("Content-Type", "application/json");
+
+	// 4: send data
+	let data = {
+		username: lastUsername,
+		sessionId: lastSessionId,
+	}
+	request.send(JSON.stringify(data));
+}
+
+cartRetrievalService=() => {
+
+	console.log(`View Cart`);
 
 
 }
+
 
 messageCollapse= function() {
 	const succLog = document.getElementById('form-result-success');

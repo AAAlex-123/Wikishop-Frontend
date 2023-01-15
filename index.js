@@ -73,9 +73,7 @@ app.post('/login', (request, response) => {
 app.post('/addToCart', (request, response) => {
 
 	console.log("Incoming cart item request:", request.body);
-
-	const { productId, username, sessionId } = request.body
-
+	const { product, username, sessionId } = request.body
 	if (username === undefined && sessionId === undefined) {
 		response.status(401);
 		response.send();
@@ -85,11 +83,13 @@ app.post('/addToCart', (request, response) => {
 	let statusCode;
 
 	if (loggedInUsersDAO[username] === sessionId) {
-		let user = cartDAO[username];
-		if (user[productId] === undefined) {
-			user[productId] = 1;
+		let cartOfUser = cartDAO[username];
+		if (cartOfUser[product.productId] === undefined) {
+			cartOfUser[product.productId] = {"title": product.title, "cost": product.cost, "quantity": 1};
+			console.log("Just added ", cartOfUser[product.product]);
+			console.log("Quantity ", cartOfUser[product.productId["quantity"]]);
 		} else {
-			user[productId] += 1;
+			cartOfUser[product] += 1;
 		}
 		console.log(`User ${username} has ${cartDAO[username][productId]} of product ${productId}`);
 
@@ -106,7 +106,7 @@ app.post('/addToCart', (request, response) => {
 app.post('/cartSizeService', (request, response) => {
 
 	console.log("Incoming cart size service request:", request.body);
-	const { username, sessionId } = request.body
+	const { username, sessionId } = request.body;
 
 	if (username === undefined && sessionId === undefined) {
 		response.status(401);
@@ -140,5 +140,53 @@ app.post('/cartSizeService', (request, response) => {
 })
 
 
+app.post('/cartRetrievalService', (request, response) => {
+
+	console.log("Incoming cart retrival service request:", request.body);
+	const { username, sessionId } = request.body;
+
+	if (username === undefined && sessionId === undefined) {
+		response.status(401);
+		response.send();
+		return;
+	}
+
+	let statusCode;
+	
+
+	if (loggedInUsersDAO[username] === sessionId) {
+		let user = cartDAO[username];
+		statusCode = 200;
+	} else {
+		console.log(`User ${username} not logged in`);
+		statusCode = 401;
+	}
+
+	response.status(statusCode);
+	response.send();
 
 
+
+})
+
+
+cartDAO = {
+	"Alex":  {
+		id1: {title: "Apple", cost: 3, quantity: 5}, 
+		id2: {title: "Orange", cost: 8, quantity: 2},
+		'3': { title: 'banana', cost: 10, quantity: 2 }
+	}
+}
+
+prodBanana = {
+	title: "banana",
+	cost: 10,
+	id: 3,
+};
+
+let productsOfAlex = cartDAO["Alex"];
+productsOfAlex[prodBanana.id]= {
+	title: prodBanana.title, cost: prodBanana.cost, quantity: 1 
+}
+
+productsOfAlex[prodBanana.id]["quantity"]+=1

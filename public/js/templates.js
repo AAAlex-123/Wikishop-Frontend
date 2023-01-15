@@ -27,7 +27,7 @@ templates.products = Handlebars.compile(`
 			<span class="price">
 				{{cost}}$
 			</span>
-			<button onclick="addToCart({{id}})">
+			<button onclick="addToCart({{id}}, {{cost}}, \`{{title}}\`)">
 				Add to Cart
 			</button>
 		</aside>
@@ -60,4 +60,24 @@ templates.filters = Handlebars.compile(`
 			</div>
 		{{/each}}
 	</div>
+`);
+
+
+templates.cart= Handlebars.compile(`
+	<table>
+		<tr>
+			<th>Product name</th>
+			<th>Cost</th>
+			<th>Quantity</th>
+		</tr>
+		{{#each item}}
+			<tr>
+				<td>{{title}}</td>
+				<td>{{cost}}</td>
+				<td>{{quantity}}</td>
+			</tr>
+		{{/each}}
+		</table>
+		<p> {{totalCost}}
+
 `);
