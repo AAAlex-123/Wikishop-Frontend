@@ -79,19 +79,16 @@ app.post('/addToCart', (request, response) => {
 		response.send();
 		return;
 	}
-
+	
 	let statusCode;
 
 	if (loggedInUsersDAO[username] === sessionId) {
 		let cartOfUser = cartDAO[username];
-		if (cartOfUser[product.productId] === undefined) {
-			cartOfUser[product.productId] = {"title": product.title, "cost": product.cost, "quantity": 1};
-			console.log("Just added ", cartOfUser[product.product]);
-			console.log("Quantity ", cartOfUser[product.productId["quantity"]]);
+		if (cartOfUser[product.id] === undefined) {
+			cartOfUser[product.id] = {"title": product.title, "cost": product.cost, "quantity": 1};
 		} else {
-			cartOfUser[product] += 1;
+			cartOfUser[product.id]["quantity"] += 1;
 		}
-		console.log(`User ${username} has ${cartDAO[username][productId]} of product ${productId}`);
 
 		statusCode = 200;
 	} else {
@@ -120,9 +117,9 @@ app.post('/cartSizeService', (request, response) => {
 
 	if (loggedInUsersDAO[username] === sessionId) {
 		console.log(`User data:` ,cartDAO);
-		let usersCart= cartDAO[username];
-		for(productId in usersCart){
-			size+=usersCart[productId];
+		let cartOfUser= cartDAO[username];
+		for(productId in cartOfUser){
+			size+=cartOfUser[productId]["quantity"];
 		}
 
 		cartSize= {"size": size};
@@ -132,7 +129,6 @@ app.post('/cartSizeService', (request, response) => {
 		statusCode = 401;
 	}
 
-
 	response.status(statusCode);
 	response.send(JSON.stringify(cartSize));
 
@@ -140,7 +136,7 @@ app.post('/cartSizeService', (request, response) => {
 })
 
 
-app.post('/cartRetrievalService', (request, response) => {
+app.get('/cartRetrievalService', (request, response) => {
 
 	console.log("Incoming cart retrival service request:", request.body);
 	const { username, sessionId } = request.body;
@@ -152,10 +148,20 @@ app.post('/cartRetrievalService', (request, response) => {
 	}
 
 	let statusCode;
-	
-
 	if (loggedInUsersDAO[username] === sessionId) {
-		let user = cartDAO[username];
+		let cartOfUser = cartDAO[username];
+		let totalCost= 0; 
+		let cartItems=[];
+		for(productId in cartOfUser){
+			totalCost+=cartOfUser[productId]["cost"];
+			cartItems.push(cartOfUser[productId]);
+		}
+		finalCart= {
+			"cartItems": cartItems,
+			"totalCost": totalCost,
+		};
+
+		console.log('The final cart is:', finalCart);
 		statusCode = 200;
 	} else {
 		console.log(`User ${username} not logged in`);
@@ -163,14 +169,14 @@ app.post('/cartRetrievalService', (request, response) => {
 	}
 
 	response.status(statusCode);
-	response.send();
+	response.send(JSON.stringify(finalCart));
 
 
 
 })
 
 
-cartDAO = {
+/*cartDAO = {
 	"Alex":  {
 		id1: {title: "Apple", cost: 3, quantity: 5}, 
 		id2: {title: "Orange", cost: 8, quantity: 2},
@@ -189,4 +195,4 @@ productsOfAlex[prodBanana.id]= {
 	title: prodBanana.title, cost: prodBanana.cost, quantity: 1 
 }
 
-productsOfAlex[prodBanana.id]["quantity"]+=1
+productsOfAlex[prodBanana.id]["quantity"]+=1*/

@@ -57,16 +57,7 @@ load.cart = (contentElementId) => {
 	const searchParams = new URLSearchParams(window.location.search);
 	const username = searchParams.get('username');
 	const sess = searchParams.get('sessionId');
+	cartRetrievalService(username, sess);
 
-	let cart= {
-		"cartItems": [
-		{"title": "Globe hoodie (men)", "cost": 42, "quantity": 2},
-		{"title": "Globe hoodie (women)", "cost": 40, "quantity": 2}
-		],
-		"totalCost": 164
-	}
-
-	let htmlContent = templates.cart(cart);
-	document.querySelector(`#${contentElementId}`).innerHTML = htmlContent;
 }
 

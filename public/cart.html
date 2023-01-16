@@ -16,10 +16,24 @@
 		<script src="js/fetch.js"></script>
 		<script src="js/functions.js"></script>
 		<script>
-			window.onload = load.cart("content");
+			window.onload = () => {
+					load.cart("content");
+				}
 		</script>
 	</head>
     <body>
+		<header id="header">
+			<a href="./index.html">
+				<picture>
+					<source media="(min-width: 1300px)" srcset="image/logo/logo-large.jpg">
+					<source srcset="image/logo/logo-small.jpg">
+					<img alt="store logo" src="image/logo/logo-small.jpg">
+				</picture>
+			</a>
+			<h1>
+				Wiki Shop
+			</h1>
+		</header>
         <main>
             <header>
                 <h2>

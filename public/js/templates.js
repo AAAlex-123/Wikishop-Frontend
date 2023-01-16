@@ -64,13 +64,14 @@ templates.filters = Handlebars.compile(`
 
 
 templates.cart= Handlebars.compile(`
+	<div>
 	<table>
 		<tr>
 			<th>Product name</th>
 			<th>Cost</th>
 			<th>Quantity</th>
 		</tr>
-		{{#each item}}
+		{{#each cartItems}}
 			<tr>
 				<td>{{title}}</td>
 				<td>{{cost}}</td>
@@ -78,6 +79,7 @@ templates.cart= Handlebars.compile(`
 			</tr>
 		{{/each}}
 		</table>
-		<p> {{totalCost}}
+		<p> The total cost is: {{totalCost}} </p>
+	</div>
 
 `);
