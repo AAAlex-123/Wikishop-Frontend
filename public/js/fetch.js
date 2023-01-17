@@ -58,6 +58,7 @@ load.cart = (contentElementId) => {
 	const username = searchParams.get('username');
 	const sess = searchParams.get('sessionId');
 	cartRetrievalService(username, sess);
+	console.log("Username: ", username, "and SessionId: ", sess);
 
 }
 

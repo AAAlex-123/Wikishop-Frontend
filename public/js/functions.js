@@ -194,3 +194,7 @@ setOpacity = function(op, el) {
     el.style.opacity = op;
 }
 
+openCartPage=()=> {
+	window.open(`cart.html?username=${lastUsername}&sessionId=${lastSessionId}` , "_blank");
+
+}
