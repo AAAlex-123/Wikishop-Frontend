@@ -138,8 +138,8 @@ app.post('/cartSizeService', (request, response) => {
 
 app.get('/cartRetrievalService', (request, response) => {
 
-	console.log("Incoming cart retrival service request:", request.body);
-	const { username, sessionId } = request.body;
+	console.log("Incoming cart retrival service request:", request.query);
+	const { username, sessionId } = request.query;
 
 	if (username === undefined && sessionId === undefined) {
 		response.status(401);

@@ -168,17 +168,11 @@ cartRetrievalService=(username, sessionId) => {
 	}
 
 	// 3: set method, url and headers
-	request.open("GET", "/cartRetrievalService");
+	request.open("GET", `/cartRetrievalService?username=${username}&sessionId=${sessionId}`);
 	request.setRequestHeader("Accept", "application/json");
-	request.setRequestHeader("Content-Type", "application/json");
 
-	// 4: send data
-	let data = {
-		username: username,
-		sessionId: sessionId,
-	}
-	request.send(JSON.stringify(data));
-
+	// 4: send request
+	request.send();
 }
 
 messageCollapse= function() {
