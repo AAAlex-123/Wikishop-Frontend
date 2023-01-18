@@ -73,7 +73,7 @@ app.post('/login', (request, response) => {
 app.post('/addToCart', (request, response) => {
 
 	console.log("Incoming cart item request:", request.body);
-	const { product, username, sessionId } = request.body
+	const { product, login: { username, sessionId } } = request.body
 	if (username === undefined && sessionId === undefined) {
 		response.status(401);
 		response.send();

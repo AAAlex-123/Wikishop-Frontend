@@ -425,7 +425,7 @@ p#form-result-failed{
 	display:none;
 }
 
-p#cartSize{
+body>div>p{
 	padding: 0.5rem;
     border-radius: 25px;
     margin: 1rem;

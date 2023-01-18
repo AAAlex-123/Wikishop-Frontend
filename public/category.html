@@ -12,11 +12,17 @@
 		<meta content="width=device-width, initial-scale=1" name="viewport">
 		<link href="css/styles.css" rel="stylesheet" type="text/css">
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-		<script src="js/templates.js"></script>
-		<script src="js/fetch.js"></script>
-		<script src="js/functions.js"></script>
+		<script src="js/category.js"></script>
 		<script>
-			window.onload = load.category("main-content-article", "filter");
+			window.onload = () => {
+				loadProducts("category-main-content", "category-filter");
+
+				document.querySelector("#login-form")
+						.addEventListener('submit', e => {
+								e.preventDefault();
+								loginFormSubmit();
+						});
+			}
 		</script>
 	</head>
 	<body>
@@ -33,7 +39,7 @@
 			</h1>
 		</header>
 		<div>
-			<nav id="filter">
+			<nav id="category-filter">
 			</nav>
 			<form id="login-form">
 				<fieldset>
@@ -56,8 +62,8 @@
 				<p id="form-result-success"> Successful Login </p>
 				<p id="form-result-failed"> Failed Login </p>
 			</form>
-			<p id="cartSize"> Cart size: 0 </p>
-			<button onclick="openCartPage()"> View Cart </button>
+			<p>Cart size: <span id="cartSize">0</span></p>
+			<button onclick="openCartPage()">View Cart</button>
 		</div>
 		<main>
 			<header>
@@ -68,7 +74,7 @@
 			<a class="return" href="index.html">
 				Back to Home
 			</a>
-			<article id="main-content-article">
+			<article id="category-main-content">
 			</article>
 		</main>
 		<footer>
@@ -96,12 +102,5 @@
 				Back to top
 			</a>
 		</footer>
-		<!-- hacky, but doesn't want to work otherwise -->
-		<script>
-			document.querySelector("#login-form").addEventListener('submit', e => {
-							e.preventDefault();
-							loginFormSubmit();
-						});
-		</script>
 	</body>
 </html>
