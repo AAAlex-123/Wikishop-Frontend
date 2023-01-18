@@ -1,26 +1,18 @@
-const { v4: uuidv4 } = require('uuid');
 const express = require('express')
 const path = require('path')
 const app = express()
 const port = 8080
 
+const { v4: uuidv4 } = require('uuid');
+
 app.listen(port)
 
-/* 
+/*
     Serve static content from directory "public",
-    it will be accessible under path /, 
+    it will be accessible under path /,
     e.g. http://localhost:8080/index.html
 */
 app.use(express.static('public'))
-
-const user= {username:"Electra", password:"3190159"};
-const user2= {username: "Alex", password: "3190106"};
-const user_DB= [];
-user_DB.push(user, user2);
-
-const loggedInUsersDAO = {};
-
-const cartDAO = {};
 
 // parse url-encoded content from body
 app.use(express.urlencoded({ extended: false }))
@@ -40,59 +32,71 @@ app.get('/', function(req, res){
     })
 })
 
+const userDAO = [
+	{ username: "Electra", password: "3190159" },
+	{ username: "Alex", password: "3190106" },
+];
+const loggedInUsersDAO = {};
+const cartDAO = {};
+
 app.post('/login', (request, response) => {
 
-	console.log("Incoming login request:", request.body);
-    let sess=null;
-    for (const x of user_DB){
-        if(request.body.username===x.username && request.body.password===x.password){
-            sess={ "sessionId": uuidv4() };
+	const { username, password } = request.body;
 
-		loggedInUsersDAO[request.body.username] = sess.sessionId;
+	let validUsername = false;
 
-		if (cartDAO[request.body.username] === undefined) {
-			cartDAO[request.body.username] = {};
+	for (let user of userDAO) {
+		if (user.username === username && user.password === password) {
+			validUsername = true;
+		}
+	}
+
+	if (validUsername) {
+		sessionId = uuidv4();
+
+		loggedInUsersDAO[username] = sessionId;
+
+		if (cartDAO[username] === undefined) {
+			cartDAO[username] = {};
 		}
 
-            response.status(200);
-            response.send(JSON.stringify(sess));
-            console.log(sess);
-            console.log("Successful Login");
-            break;
-        } 
-    }
+		let responseObj = {
+			"sessionId": sessionId,
+		};
 
-    if(sess===null){
+		response.status(200);
+		response.send(JSON.stringify(responseObj));
+	} else {
         response.status(401);
         response.send();
-        console.log("Unsuccessful Login");
-    }
-
+	}
 })
 
 app.post('/addToCart', (request, response) => {
 
-	console.log("Incoming cart item request:", request.body);
-	const { product, login: { username, sessionId } } = request.body
+	const { product, login: { username, sessionId } } = request.body;
+
 	if (username === undefined && sessionId === undefined) {
-		response.status(401);
+		response.status(400);
 		response.send();
 		return;
 	}
-	
+
 	let statusCode;
 
 	if (loggedInUsersDAO[username] === sessionId) {
+
+		let { id, title, cost } = product;
 		let cartOfUser = cartDAO[username];
-		if (cartOfUser[product.id] === undefined) {
-			cartOfUser[product.id] = {"title": product.title, "cost": product.cost, "quantity": 1};
+
+		if (cartOfUser[id] === undefined) {
+			cartOfUser[id] = { "title": title, "cost": cost, "quantity": 1 };
 		} else {
-			cartOfUser[product.id]["quantity"] += 1;
+			cartOfUser[id]["quantity"] += 1;
 		}
 
 		statusCode = 200;
 	} else {
-		console.log(`User ${username} not logged in`);
 		statusCode = 401;
 	}
 
@@ -102,98 +106,63 @@ app.post('/addToCart', (request, response) => {
 
 app.get('/cartSizeService', (request, response) => {
 
-	console.log("Incoming cart size service request:", request.query);
 	const { username, sessionId } = request.query;
 
 	if (username === undefined && sessionId === undefined) {
-		response.status(401);
+		response.status(400);
 		response.send();
 		return;
 	}
 
-	let statusCode;
-	let size=0;
-	let cartSize;
-
 	if (loggedInUsersDAO[username] === sessionId) {
-		console.log(`User data:` ,cartDAO);
-		let cartOfUser= cartDAO[username];
-		for(productId in cartOfUser){
-			size+=cartOfUser[productId]["quantity"];
-		}
 
-		cartSize= {"size": size};
-		statusCode = 200;
+		let cartOfUser = cartDAO[username];
+
+		let size = 0;
+		Object.values(cartOfUser).forEach(product => {
+			size += product["quantity"];
+		});
+
+		let responseObj = {
+			"size": size,
+		};
+		response.status(200);
+		response.send(JSON.stringify(responseObj));
 	} else {
-		console.log(`User ${username} not logged in`);
-		statusCode = 401;
+		response.status(401);
+		response.send();
 	}
-
-
-	response.status(statusCode);
-	response.send(JSON.stringify(cartSize));
-
-	
 })
-
 
 app.get('/cartRetrievalService', (request, response) => {
 
-	console.log("Incoming cart retrival service request:", request.query);
 	const { username, sessionId } = request.query;
 
 	if (username === undefined && sessionId === undefined) {
-		response.status(401);
+		response.status(400);
 		response.send();
 		return;
 	}
 
-	let statusCode;
 	if (loggedInUsersDAO[username] === sessionId) {
 		let cartOfUser = cartDAO[username];
-		let totalCost= 0; 
-		let cartItems=[];
-		for(productId in cartOfUser){
-			totalCost+=cartOfUser[productId]["cost"] * cartOfUser[productId]["quantity"];
-			cartItems.push(cartOfUser[productId]);
-		}
-		finalCart= {
+
+		let totalCost = 0;
+		let cartItems = [];
+
+		Object.values(cartOfUser).forEach(product => {
+			totalCost += product["cost"] * product["quantity"];
+			cartItems.push(product);
+		});
+
+		let responseObj = {
 			"cartItems": cartItems,
 			"totalCost": totalCost,
 		};
-
-		console.log('The final cart is:', finalCart);
-		statusCode = 200;
+		response.status(200);
+		response.send(JSON.stringify(responseObj));
 	} else {
-		console.log(`User ${username} not logged in`);
-		statusCode = 401;
+		response.status(401);
+		response.send();
 	}
-
-	response.status(statusCode);
-	response.send(JSON.stringify(finalCart));
-
-
-
 })
-
-
-/*cartDAO = {
-	"Alex":  {
-		id1: {title: "Apple", cost: 3, quantity: 5}, 
-		id2: {title: "Orange", cost: 8, quantity: 2},
-		'3': { title: 'banana', cost: 10, quantity: 2 }
-	}
-}
-
-prodBanana = {
-	title: "banana",
-	cost: 10,
-	id: 3,
-};
-
-let productsOfAlex = cartDAO["Alex"];
-productsOfAlex[prodBanana.id]= {
-	title: prodBanana.title, cost: prodBanana.cost, quantity: 1 
-}
-
-productsOfAlex[prodBanana.id]["quantity"]+=1*/
