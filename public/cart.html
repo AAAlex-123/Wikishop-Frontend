@@ -12,13 +12,11 @@
 		<meta content="width=device-width, initial-scale=1" name="viewport">
 		<link href="css/styles.css" rel="stylesheet" type="text/css">
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-		<script src="js/templates.js"></script>
-		<script src="js/fetch.js"></script>
-		<script src="js/functions.js"></script>
+		<script src="js/cart.js"></script>
 		<script>
 			window.onload = () => {
-					load.cart("content");
-				}
+				loadCart("cart-main-content");
+			}
 		</script>
 	</head>
     <body>
@@ -43,7 +41,7 @@
             <a class="return" href="index.html">
                 Back to Home
             </a>
-            <article id="content">
+            <article id="cart-main-content">
             </article>
         </main>
 		<footer>

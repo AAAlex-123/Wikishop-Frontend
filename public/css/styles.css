@@ -245,6 +245,9 @@ body>main>article.single-page-form {
 	grid-template-columns: repeat(1, 1fr);
 }
 
+div#cart {
+	grid-column: 1/3;
+}
 
 /* ---------------------------------- *
  * --- ARTICLE.SINGLE-PRODUCT>NAV --- *
