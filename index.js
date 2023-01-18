@@ -13,8 +13,8 @@ app.listen(port)
 */
 app.use(express.static('public'))
 
-const user= {username:"Pain", password:"Manasu"};
-const user2= {username: "Ass", password: "Mana2"};
+const user= {username:"Electra", password:"3190159"};
+const user2= {username: "Alex", password: "3190106"};
 const user_DB= [];
 user_DB.push(user, user2);
 
@@ -100,10 +100,10 @@ app.post('/addToCart', (request, response) => {
 	response.send();
 })
 
-app.post('/cartSizeService', (request, response) => {
+app.get('/cartSizeService', (request, response) => {
 
-	console.log("Incoming cart size service request:", request.body);
-	const { username, sessionId } = request.body;
+	console.log("Incoming cart size service request:", request.query);
+	const { username, sessionId } = request.query;
 
 	if (username === undefined && sessionId === undefined) {
 		response.status(401);
@@ -128,6 +128,7 @@ app.post('/cartSizeService', (request, response) => {
 		console.log(`User ${username} not logged in`);
 		statusCode = 401;
 	}
+
 
 	response.status(statusCode);
 	response.send(JSON.stringify(cartSize));

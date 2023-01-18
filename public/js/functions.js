@@ -130,16 +130,11 @@ cartSizeService= () => {
 	}
 
 	// 3: set method, url and headers
-	request.open("POST", "/cartSizeService");
+	request.open("GET", `/cartSizeService?username=${lastUsername}&sessionId=${lastSessionId}`);
 	request.setRequestHeader("Accept", "application/json");
-	request.setRequestHeader("Content-Type", "application/json");
 
 	// 4: send data
-	let data = {
-		username: lastUsername,
-		sessionId: lastSessionId,
-	}
-	request.send(JSON.stringify(data));
+	request.send();
 }
 
 cartRetrievalService=(username, sessionId) => {

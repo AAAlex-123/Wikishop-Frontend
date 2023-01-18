@@ -79,7 +79,7 @@ templates.cart= Handlebars.compile(`
 			</tr>
 		{{/each}}
 		</table>
-		<p> The total cost is: {{totalCost}} </p>
+		<p id="cartCost"> The total cost is: {{totalCost}} </p>
 	</div>
 
 `);
