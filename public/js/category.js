@@ -1,25 +1,3 @@
-
-const filterClick = (subcategoryId, contentElementId) => {
-	let filteredProducts = fetched_products;
-
-	if (subcategoryId !== -1) {
-		filteredProducts = filteredProducts.filter(
-			prod => prod.subcategory_id === subcategoryId
-		)
-	}
-
-	let htmlContent = templates.products({
-		"products": filteredProducts,
-	});
-
-	document.querySelector(`#${contentElementId}`).innerHTML = htmlContent;
-}
-
-const openCartPage=()=> {
-	let { username, sessionId} = lastLoginCredentials;
-	window.open(`cart.html?username=${username}&sessionId=${sessionId}` , "_blank");
-}
-
 const productsTemplate = Handlebars.compile(`
 	{{#each products}}
 		<section>
@@ -66,6 +44,27 @@ const filterTemplate = Handlebars.compile(`
 `);
 
 let fetchedProducts = undefined;
+
+const filterClick = (subcategoryId, contentElementId) => {
+	let filteredProducts = fetchedProducts;
+
+	if (subcategoryId !== -1) {
+		filteredProducts = filteredProducts.filter(
+			prod => prod.subcategory_id === subcategoryId
+		)
+	}
+
+	let htmlContent = productsTemplate({
+		"products": filteredProducts,
+	});
+
+	document.querySelector(`#${contentElementId}`).innerHTML = htmlContent;
+}
+
+const openCartPage=()=> {
+	let { username, sessionId} = lastLoginCredentials;
+	window.open(`cart.html?username=${username}&sessionId=${sessionId}` , "_blank");
+}
 
 const loadProducts = (contentElementId, filterElementId) => {
 
