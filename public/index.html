@@ -12,10 +12,11 @@
 		<meta content="width=device-width, initial-scale=1" name="viewport">
 		<link href="css/styles.css" rel="stylesheet" type="text/css">
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-		<script src="js/templates.js"></script>
-		<script src="js/fetch.js"></script>
+		<script src="js/index.js"></script>
 		<script>
-			window.onload = load.index("main-content-article");
+			window.onload = () => {
+				loadCategories("index-main-content");
+			}
 		</script>
 	</head>
 	<body>
@@ -40,7 +41,7 @@
 			<a class="return" href="index.html">
 				Back to Home
 			</a>
-			<article id="main-content-article">
+			<article id="index-main-content">
 			</article>
 		</main>
 		<footer>

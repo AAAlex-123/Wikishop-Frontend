@@ -1,21 +1,6 @@
 let load = {}
 let fetched_products = undefined;
 
-load.index = (elementId) => {
-	fetch("https://wiki-shop.onrender.com/categories")
-		.then(response => {
-			return response.json()
-		})
-		.then(raw_obj => {
-
-			let htmlContent = templates.categories({
-				"categories": raw_obj,
-			});
-
-			document.querySelector(`#${elementId}`).innerHTML = htmlContent;;
-		});
-}
-
 load.category = (contentElementId, filterElementId) => {
 
 	const searchParams = new URLSearchParams(window.location.search);
