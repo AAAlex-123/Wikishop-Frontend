@@ -158,7 +158,7 @@ cartRetrievalService=(username, sessionId) => {
 				let obj = JSON.parse(txt);
 				console.log(`Request`, obj);
 				let htmlContent = templates.cart(obj);
-				document.querySelector(`#${contentElementId}`).innerHTML = htmlContent;
+				document.querySelector(`#content`).innerHTML = htmlContent;
 			} else if (request.status==401){
 				alert("Please log in to view the cart");
 			} else {

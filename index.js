@@ -153,7 +153,7 @@ app.get('/cartRetrievalService', (request, response) => {
 		let totalCost= 0; 
 		let cartItems=[];
 		for(productId in cartOfUser){
-			totalCost+=cartOfUser[productId]["cost"];
+			totalCost+=cartOfUser[productId]["cost"] * cartOfUser[productId]["quantity"];
 			cartItems.push(cartOfUser[productId]);
 		}
 		finalCart= {
