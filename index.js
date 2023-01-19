@@ -36,6 +36,14 @@ const userDAO = [
 	{ username: "Electra", password: "3190159" },
 	{ username: "Alex", password: "3190106" },
 ];
+
+for (let i = 0; i < 5; i++) {
+	userDAO.push({
+		username: `user${i}`,
+		password: `pass${i}`,
+	});
+}
+
 const loggedInUsersDAO = {};
 const cartDAO = {};
 
