@@ -1,26 +1,24 @@
 
 const cartTemplate = Handlebars.compile(`
-	<div id="cart">
-		<table>
-			<thead>
+	<table>
+		<thead>
+			<tr>
+				<th>Product name</th>
+				<th>Cost</th>
+				<th>Quantity</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each cartItems}}
 				<tr>
-					<th>Product name</th>
-					<th>Cost</th>
-					<th>Quantity</th>
+					<td>{{title}}</td>
+					<td>{{cost}}</td>
+					<td>{{quantity}}</td>
 				</tr>
-			</thead>
-			<tbody>
-				{{#each cartItems}}
-					<tr>
-						<td>{{title}}</td>
-						<td>{{cost}}</td>
-						<td>{{quantity}}</td>
-					</tr>
-				{{/each}}
-			</tbody>
-		</table>
-		<p id="cartCost">The total cost is: {{totalCost}}</p>
-	</div>
+			{{/each}}
+		</tbody>
+	</table>
+	<p id="cartCost">The total cost is: {{totalCost}}</p>
 `);
 
 const reportRequestFailed = (request) => {

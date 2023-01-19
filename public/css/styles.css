@@ -17,11 +17,6 @@
 }
 
 @font-face {
-	font-family: font-index;
-	src: url("../font/Letters for Learners.ttf");
-}
-
-@font-face {
 	font-family: font-a;
 	src: url("../font/Courier Prime.ttf");
 }
@@ -125,6 +120,7 @@
 		grid-row: 2;
 		grid-column: 1;
 		position: relative;
+		margin-bottom: 0rem;
 	}
 
 	body>main {
@@ -180,14 +176,6 @@ body>main>article {
 	gap: 1.5rem
 }
 
-/* Styles for the paragraph on the index page */
-body>main>p {
-       font: bold 1.7rem font-index, serif;
-       text-align: justify;
-       padding: 1rem;
-}
-
-
 /* ----------------------- *
  * --- ARTICLE>SECTION --- *
  * ----------------------- */
@@ -205,87 +193,25 @@ body>main>article>section>header>strong>* {
 	font: bold 1.8rem 'Georgia', serif;
 }
 
-/* Links in section headers */
-body>main>article>section>header>strong>a:link,
-body>main>article>section>header>strong>a:visited {
-	color: rgb(15, 21, 138);
-	text-decoration: none;
-}
-
-/* Links in section headers when hovered */
-body>main>article>section>header>strong>a:hover {
-	color:rgb(128, 40, 6);
-	text-decoration: underline;
-}
-
-article#content>div{
+article#content>div {
 	grid-column: 1/3;
-
 }
 
+/* View Cart button */
 body>div>button {
 	width: 75%;
 	font-size: 2rem;
 	padding: 1rem
 }
 
-
 /* --------------------------- *
  * --- SPECIALISED ARTICLE --- *
  * --------------------------- */
 
-/* Specialised layout for articles for product pages */
-body>main>article.single-product>section {
-	scroll-margin-top: 7rem;
-}
-
 /* Specialized layout for articles with forms */
-body>main>article.single-product,
-body>main>article.single-page-form {
+body>main>article#cart-main-content {
 	grid-template-columns: repeat(1, 1fr);
 }
-
-div#cart {
-	grid-column: 1/3;
-}
-
-/* ---------------------------------- *
- * --- ARTICLE.SINGLE-PRODUCT>NAV --- *
- * ---------------------------------- */
-
-/* The product page's nav bar is also a flexbox and follows the user as they scroll down */
-body>main>article.single-product>nav {
-	padding: 1rem;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	background-color: white;
-	box-shadow: 0px 0px 5px 2px gray;
-	position: sticky;
-	top: 0rem;
-}
-
-/* Modern look for the links in the product page's nav */
-body>main>article.single-product>nav>a {
-	padding: 1rem;
-	border-radius: 25px;
-	background-color: rgb(202, 236, 244);
-}
-
-body>main>article.single-product>nav>a:link,
-body>main>article.single-product>nav>a:visited {
-	color: #0000EE;
-	font-size: 2rem;
-	text-decoration: none;
-}
-
-/* Customization of the product page's header */
-body>main>article.single-product>section>header>h3 {
-	padding-bottom: 1rem;
-	text-decoration: solid;
-	font: 2rem "Lucida Console", "Courier New", monospace;
-}
-
 
 /* ---------------------------- *
  * --- TABLE, TH, TD, THEAD --- *
@@ -407,19 +333,14 @@ a.return::before {
 }
 
 /*
- * Each item description (short and extended) has different style, as do
+ * Each item description has different style, as do
  * the product code and price tags.
  */
 p.short-description {
 	font: 1.5rem 'Times New Roman', serif;
 }
 
-p.extended-description {
-	padding: 0.5rem;
-	font: 1.0rem 'Times New Roman', serif;
-	text-align: justify;
-}
-
+/* By default hide all login result text */
 p#form-result-success{
 	display:none;
 }
@@ -428,6 +349,7 @@ p#form-result-failed{
 	display:none;
 }
 
+/* Put empasis on cart size text */
 body>div>p{
 	padding: 0.5rem;
     border-radius: 25px;
@@ -438,13 +360,12 @@ body>div>p{
     background-color: whitesmoke;
 }
 
-p#cartCost{
+/* Bigger font for cart cost text */
+p#cartCost {
 	text-align:center;
 	font-family: 'font-a';
     font-size: 2rem;
-	
 }
-
 
 span.product-code {
 	font: italic 1rem 'Times New Roman', serif;
@@ -453,13 +374,6 @@ span.product-code {
 span.price {
 	padding-bottom: 1rem;
 	font: 3.5rem 'Times New Roman', serif;
-}
-
-/* The review section is a vertical flexbox to have the reviews one under the other */
-section#reviews article {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
 }
 
 /* ----------- *
@@ -472,27 +386,6 @@ img.product-preview {
 	max-width: 9rem;
 	max-height: 12rem;
 	display: block;
-}
-
-img.product-image {
-	width: auto;
-	height: 15rem;
-}
-
-img.product-image:hover {
-	width: auto;
-	height: 40rem;
-}
-
-img.rating {
-	max-width: 9rem;
-	height: auto;
-}
-
-img.img-bio {
-	padding: 1.5rem;
-	width: 7.5rem;
-	border-radius: 50%;
 }
 
 img.type-image {
@@ -533,9 +426,9 @@ form {
 
 /* Additionally, each fieldset has yellow background */
 form fieldset {
-	margin-bottom: 1.5rem;
-	padding: 0.75rem 1.25rem;
-	background-color: rgb(253, 229, 120);
+       margin-bottom: 1.5rem;
+       padding: 0.75rem 1.25rem;
+       background-color: rgb(253, 229, 120);
 }
 
 /* Font for legend, label, input and select elements */
@@ -545,17 +438,13 @@ form legend {
 }
 
 form label,
-form input,
-form select,
-form textarea {
+form input {
 	font-weight: bold;
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	color: rgb(47, 51, 54);
 }
 
-form input,
-form select,
-form textarea {
+form input {
 	font-size: 0.7rem;
 }
 
@@ -564,9 +453,7 @@ form label {
 }
 
 /* Display all form elements one below the other and adjust their margin and padding */
-form input,
-form select,
-form textarea {
+form input {
 	display: block;
 	margin-top: 0.3rem;
 	margin-bottom: 1rem;
@@ -578,16 +465,12 @@ form textarea {
 }
 
 /* Form elements change color on focus, when we click on it to write */
-form input:focus,
-form select:focus,
-form textarea:focus {
+form input:focus {
 	background-color: rgb(202, 236, 244);
 }
 
 /* Required form elements change color when invalid */
-form input:required:not(:placeholder-shown):not(:focus):invalid,
-form select:required:not(:placeholder-shown):not(:focus):invalid,
-form textarea:required:not(:placeholder-shown):not(:focus):invalid {
+form input:required:not(:placeholder-shown):not(:focus):invalid {
 	border-color: red;
 }
 
@@ -614,23 +497,8 @@ form input[type=reset] {
 	max-width: 10rem;
 }
 
-/* Select with autocomplete dropdown */
-form input[list] {
-	width: 100%;
-	height: 1.5rem;
-	padding: 1.25rem;
-}
-
-/* Grid with a dynamic number of rows with two columns */
-form fieldset fieldset {
-	display: grid;
-	grid-template-columns: auto auto;
-	gap: 1rem;
-	justify-content: start;
-}
-
 /* The elements of the form never leave outside its boundaries */
-form fieldset fieldset input, form fieldset fieldset select {
+form fieldset fieldset input {
 	margin: 0;
 	padding: 0;
 	width: fit-content;
