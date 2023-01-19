@@ -153,7 +153,7 @@ const loginFormSubmit = () => {
 			cartSizeService();
 
 			showLoginResultText(true);
-		} else if (request.status === 401){
+		} else if (request.status === 400 || request.status === 401) {
 			showLoginResultText(false);
 		} else {
 			reportRequestFailed(request);
@@ -181,7 +181,7 @@ const addToCart = (productId, cost, title) => {
 	request.onload = () => {
 		if (request.status === 200) {
 			cartSizeService();
-		} else if (request.status === 401) {
+		} else if (request.status === 400 || request.status === 401) {
 			alert("Please log in to add product to cart");
 		} else {
 			reportRequestFailed(request);
@@ -218,7 +218,7 @@ const cartSizeService = () => {
 			let obj = JSON.parse(txt);
 
 			document.querySelector("#cartSize").innerHTML = obj["size"];
-		} else if (request.status === 401) {
+		} else if (request.status === 400 || request.status === 401) {
 			alert("Please log in to add product to cart");
 		} else {
 			reportRequestFailed(request);
